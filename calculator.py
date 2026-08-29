@@ -10,11 +10,9 @@ def button_clear():
 def button_equal():
     try:
         expr = display_var.get()
-        # إغلاق الأقواس تلقائياً في حال نسيانها
         expr += ')' * (expr.count('(') - expr.count(')'))
         expr = expr.replace('^', '**')
         
-        # تحويل الحساب للدرجات بدلاً من الراديان وتجنب الكسور الطويلة
         math_dict = {
             'sin': lambda x: round(math.sin(math.radians(x)), 10),
             'cos': lambda x: round(math.cos(math.radians(x)), 10),
@@ -24,7 +22,6 @@ def button_equal():
         
         result = str(eval(expr, {"__builtins__": None}, math_dict))
         
-        # إزالة الفاصلة الصفرية إذا كان الرقم صحيحاً
         if result.endswith('.0'):
             result = result[:-2]
             
@@ -35,10 +32,10 @@ def button_equal():
 root = tk.Tk()
 root.title("Advanced Calculator")
 root.geometry("360x520")
-root.configure(bg="#2f3640")
+root.configure(bg='#2f3640')
 
 display_var = tk.StringVar()
-display = tk.Entry(root, textvariable=display_var, font=('Arial', 24, 'bold'), bg="#f5f6fa", fg="#2f3640", justify="right", bd=10)
+display = tk.Entry(root, textvariable=display_var, font=('Arial', 24, 'bold'), bg='#f5f6fa', fg='#2f3640', justify='right')
 display.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=20, pady=15)
 
 buttons = [
@@ -52,15 +49,15 @@ buttons = [
 
 for (text, row, col) in buttons:
     if text == '=':
-        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg="#4cd137", fg="white", command=button_equal)
+        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg='#4cd137', fg="white", command=button_equal)
     elif text == 'C':
-        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg="#e84118", fg="white", command=button_clear)
-    elif text in ['sin', 'cos', 'tan', 'sqrt']:
-        btn = tk.Button(root, text=text, font=('Arial', 14, 'bold'), bg="#7f8fa6", fg="white", command=lambda t=text: button_click(t + '('))
-    elif text in ['/', '*', '-', '+', '^', '(', ')']:
-        btn = tk.Button(root, text=text, font=('Arial', 16, 'bold'), bg="#e1b12c", fg="white", command=lambda t=text: button_click(t))
+        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg='#e84118', fg="white", command=button_clear)
+    elif text in ('sin', 'cos', 'tan', 'sqrt'):
+        btn = tk.Button(root, text=text, font=('Arial', 14, 'bold'), bg='#7f8fa6', fg="white", command=lambda t=text: button_click(t + '('))
+    elif text in ('/', '*', '-', '+', '^', '(', ')'):
+        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg='#e1b12c', fg="white", command=lambda t=text: button_click(t))
     else:
-        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg="#353b48", fg="white", command=lambda t=text: button_click(t))
+        btn = tk.Button(root, text=text, font=('Arial', 18, 'bold'), bg='#353b48', fg="white", command=lambda t=text: button_click(t))
     btn.grid(row=row, column=col, sticky="nsew", padx=3, pady=3)
 
 for i in range(4):
